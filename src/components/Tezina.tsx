@@ -1,36 +1,20 @@
-
-
 function Tezina(props) {
-    
-        const handleEasyClick = () => {
-          props.naPromjenuTezine('easy');
-        };
-      
-        const handleMediumClick = () => {
-          props.naPromjenuTezine('medium');
-        };
-      
-        const handleHardClick = () => {
-          props.naPromjenuTezine('hard');
-        };
-      
-
-  return (
-    <div>
-      <button onClick={handleEasyClick}>
-        Lako
-      </button>
-      <button onClick={handleMediumClick}>
-        Srednje
-      </button>
-      <button onClick={handleHardClick}>
-        Teško
-      </button>
-       
-    </div>
-  );
-}
-export default Tezina;
+    return (
+      <div>
+        <button value="easy" onClick={props.naPromjenuTezine}>
+          Lako
+        </button>
+        <button value="medium" onClick={props.naPromjenuTezine}>
+          Srednje
+        </button>
+        <button value="hard" onClick={props.naPromjenuTezine}>
+          Teško
+        </button>
+      </div>
+    );
+  }
+  
+  export default Tezina;
 
 
 

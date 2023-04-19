@@ -5,27 +5,55 @@ import Odgovori from './Odgovori';
 import Rezultat from './Rezultat';
 import Tezina from './Tezina';
 import Kategorija from './Kategorija';
+import BrojPitanja from './BrojPitanja';
 
 function Dohvat() {
   const [pitanja, postaviPitanja] = useState([]);
   const [trenutnoPitanjeIndex, postaviTrenutnoPitanjeIndex] = useState(0);
   const [tocniOdgovori, postaviTocneOdgovore] = useState(0);
   const [prikaziRezultat, postaviPrikaziRezultat] = useState(false);
-  const [odabranaTezina, postaviOdabranuTezinu] = useState('hard');
+  const [odabranaTezina, postaviOdabranuTezinu] = useState('');
   const [kategorija, postaviKategoriju]=useState('9')
+  const [brojPitanja , postaviBrojPitanja]=useState('5')
   const [apiUrl, postaviApiUrl]=useState(`https://opentdb.com/api.php?amount=10&category=${kategorija}&difficulty=${odabranaTezina}`)
 
   const handleTezinaClick = (event) => {
-    const novaTezina =event.target.value;
-    if(novaTezina){
-    postaviOdabranuTezinu(novaTezina);
-    postaviApiUrl(`https://opentdb.com/api.php?amount=10&category=${kategorija}&difficulty=${novaTezina}`);
+    if (event?.target?.value) {
+    const novaTezina = event.target.value;
+      postaviOdabranuTezinu(novaTezina);
+      postaviApiUrl(
+        `https://opentdb.com/api.php?amount=${brojPitanja}&category=${kategorija}&difficulty=${novaTezina}`
+      );
+      postaviTrenutnoPitanjeIndex(0); 
+      postaviTocneOdgovore(0); 
     fetchQuestions();
-    }
+      }
   };
 
   const handleKategorijaChange=(event)=>{
-    postaviKategoriju(event.target.value);
+    if (event?.target?.value){
+    const novaKategorija = event.target.value;
+    postaviKategoriju(novaKategorija);
+    postaviApiUrl(
+      `https://opentdb.com/api.php?amount=${brojPitanja}&category=${novaKategorija}&difficulty=${odabranaTezina}`
+      );
+      postaviTrenutnoPitanjeIndex(0); 
+      postaviTocneOdgovore(0);
+    fetchQuestions();
+    }
+  };
+  
+  const handleBrojPitanjaChange=(event)=>{
+    if(event?.target?.value){
+      const noviBrojPitanja =event.target.value;
+      postaviBrojPitanja(noviBrojPitanja);
+      postaviApiUrl (
+        `https://opentdb.com/api.php?amount=${noviBrojPitanja}&category=${kategorija}&difficulty=${odabranaTezina}`
+        );
+        postaviTrenutnoPitanjeIndex(0); 
+        postaviTocneOdgovore(0); 
+      fetchQuestions(); 
+    }
   }
 
 
@@ -91,6 +119,8 @@ function Dohvat() {
         <div>
       <Tezina naPromjenuTezine={handleTezinaClick} />
       <Kategorija kategorija={kategorija} onKategorijaChange={handleKategorijaChange} />
+      <BrojPitanja brojPitanja={brojPitanja} onBrojPitanjaChange={handleBrojPitanjaChange}/>
+
     </div>
         <div>
         {listaPitanja}
