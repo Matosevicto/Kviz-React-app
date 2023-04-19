@@ -1,9 +1,9 @@
-
+import '../styles.css'
 function Kategorija(props){
     return(
         <>
-        <div>
-    <label htmlFor="category-select">Kategorija:</label>
+        <div className='kategorija'>
+    <label htmlFor="category-select">Category: </label>
       <select id="category-select" value={props.kategorija} onChange={props.onKategorijaChange}>
         <option value="9">General Knowledge</option>
         <option value="10">Entertainment: Books</option>

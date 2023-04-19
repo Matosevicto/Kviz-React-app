@@ -1,16 +1,21 @@
 
 
-import { useState, useEffect } from "react";
-import Dohvat from "./components/Dohvat";
-import Pitanja from "./components/Pitanja";
+import Igra from "./components/Igra";
+import Card from 'react-bootstrap/Card';
+import './App.css';
+
 
 function App() {
   return(
-    <>
-    <h1>Quiz</h1>
-  <Dohvat></Dohvat>
+    <Card>
+    <div>
+   
+    <h1 className="quiz">Quiz</h1>
+  <Igra></Igra>
 
-    </>
+  </div>
+  </Card>
+   
   );
 }
 export default App;

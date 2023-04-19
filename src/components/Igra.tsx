@@ -6,16 +6,21 @@ import Rezultat from './Rezultat';
 import Tezina from './Tezina';
 import Kategorija from './Kategorija';
 import BrojPitanja from './BrojPitanja';
+import Card from 'react-bootstrap/Card';
+import '../styles.css'
 
-function Dohvat() {
+
+function Igra() {
   const [pitanja, postaviPitanja] = useState([]);
   const [trenutnoPitanjeIndex, postaviTrenutnoPitanjeIndex] = useState(0);
   const [tocniOdgovori, postaviTocneOdgovore] = useState(0);
   const [prikaziRezultat, postaviPrikaziRezultat] = useState(false);
+  const [trenutniOdgovor, postaviTrenutniOdgovor] = useState('');
   const [odabranaTezina, postaviOdabranuTezinu] = useState('');
   const [kategorija, postaviKategoriju]=useState('9')
   const [brojPitanja , postaviBrojPitanja]=useState('5')
-  const [apiUrl, postaviApiUrl]=useState(`https://opentdb.com/api.php?amount=10&category=${kategorija}&difficulty=${odabranaTezina}`)
+  const [apiUrl, postaviApiUrl]=useState(`https://opentdb.com/api.php?amount=${brojPitanja}&category=${kategorija}&difficulty=${odabranaTezina}`)
+  
 
   const handleTezinaClick = (event) => {
     if (event?.target?.value) {
@@ -27,8 +32,12 @@ function Dohvat() {
       postaviTrenutnoPitanjeIndex(0); 
       postaviTocneOdgovore(0); 
     fetchQuestions();
+    
+    
       }
   };
+
+  
 
   const handleKategorijaChange=(event)=>{
     if (event?.target?.value){
@@ -56,8 +65,6 @@ function Dohvat() {
     }
   }
 
-
-
     useEffect(()=>{
       fetchQuestions();
 
@@ -71,14 +78,19 @@ function Dohvat() {
     const handleAnswer =(answer)=>{
       const trenutnoPitanje = pitanja[trenutnoPitanjeIndex];
       if(answer===trenutnoPitanje.correct_answer){
+        postaviTrenutniOdgovor('tocno');
         postaviTocneOdgovore(tocniOdgovori+1);
+      } else {
+        postaviTrenutniOdgovor('krivo');
       }
+
       const sljedcePitanjeIndex = trenutnoPitanjeIndex + 1;
       if (sljedcePitanjeIndex < pitanja.length){
         postaviTrenutnoPitanjeIndex(sljedcePitanjeIndex)
 
       } else{
         postaviPrikaziRezultat(true);
+        
       }
     }
 
@@ -100,7 +112,7 @@ function Dohvat() {
     }
   
     if (pitanja.length === 0) {
-      return <div>Loading ...</div>;
+      return <div className='loading'>Loading ...</div>;
     }
     
     
@@ -108,46 +120,54 @@ function Dohvat() {
 
    const listaPitanja = pitanja.map((pitanje, index) => {
     return (
-      <button key={index} onClick={() => postaviTrenutnoPitanjeIndex(index)}>
-        Pitanje {index + 1}
+      <button 
+      key={index} 
+      className={index === trenutnoPitanjeIndex ? 'active' : ''}
+      onClick={() => postaviTrenutnoPitanjeIndex(index)}>
+        Question {index + 1}
       </button>
     );
   });
 
     return (
-      <div>
-        <div>
-      <Tezina naPromjenuTezine={handleTezinaClick} />
-      <Kategorija kategorija={kategorija} onKategorijaChange={handleKategorijaChange} />
-      <BrojPitanja brojPitanja={brojPitanja} onBrojPitanjaChange={handleBrojPitanjaChange}/>
+      <Card className='Card'>
+        <div className='opcije'>
+      <Kategorija  kategorija={kategorija} onKategorijaChange={handleKategorijaChange} />
+
+      <Tezina  naPromjenuTezine={handleTezinaClick} />
+      
+      <BrojPitanja  brojPitanja={brojPitanja} onBrojPitanjaChange={handleBrojPitanjaChange}/>
 
     </div>
         <div>
         {listaPitanja}
       </div>
-        <div>
-      Pitanja {trenutnoPitanjeIndex + 1} od {pitanja.length}
+        <div className='pitanje'>
+      Questions {trenutnoPitanjeIndex + 1} of {pitanja.length}
       </div>
-      <div>
-        Rezultat: {tocniOdgovori}/{trenutnoPitanjeIndex}
+  
+      <div className='rezultat'>
+        Result: {tocniOdgovori}/{trenutnoPitanjeIndex}
       </div>
       <Pitanja text={trenutnoPitanje.question}/>
       <div>
       {trenutnoPitanje.incorrect_answers.map((answer) => (
-            <Odgovori
-              key={answer}
-              text={answer}
-              onClick={() => handleAnswer(answer)}
-            />
-            ))}
-            <Odgovori
-            key={trenutnoPitanje.correct_answer}
-            text={trenutnoPitanje.correct_answer}
-            onClick={()=>handleAnswer(trenutnoPitanje.correct_answer)}
-            />
+     <Odgovori
+    key={answer}
+    text={answer}
+    className={trenutniOdgovor === 'krivo' ? 'krivo' : ''}
+    onClick={() => handleAnswer(answer)}
+  />
+))}
+<Odgovori
+  key={trenutnoPitanje.correct_answer}
+  text={trenutnoPitanje.correct_answer}
+  className={trenutniOdgovor === 'tocno' ? 'tocno' : ''}
+  onClick={() => handleAnswer(trenutnoPitanje.correct_answer)}
+/>
       </div>
-    </div>
+    </Card>
     
     );
   }
-export default Dohvat;
+export default Igra;

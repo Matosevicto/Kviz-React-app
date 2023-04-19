@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import '../styles.css'
 
 
 function Pitanja(props) {
    return(
-    <>
+    <div className="pitanja">
     {props.text}
-    </>
+    </div>
     );
   }
 

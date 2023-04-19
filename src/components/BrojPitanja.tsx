@@ -1,10 +1,10 @@
-
+import '../styles.css'
 
 function BrojPitanja(props){
     return(
         <>
-        <div>
-    <label htmlFor="amount-select">Broj pitanja:</label>
+        <div className='broj-pitanja'>
+    <label htmlFor="amount-select">Questions number: </label>
       <select id="amount-select" value={props.brojPitanja} onChange={props.onBrojPitanjaChange}>
         <option value="5">5</option>
         <option value="6">6</option>

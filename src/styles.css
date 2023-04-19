@@ -1,0 +1,69 @@
+.Card{
+    background-color: aliceblue;
+   text-align: center;
+   border-radius: 25px;
+   padding: 25px;
+   background-color: #F5D042;
+   color: #0A174E;
+   font-family: Arial, Helvetica, sans-serif;
+   
+}
+.active{
+    color: white;
+    background-color: black;
+}
+.tocno {
+    background-color: green;
+    color: white;
+  }
+.opcije{
+  padding-bottom: 25px;
+}
+.kategorija{
+  padding-bottom: 20px;
+  font-size: 1.3rem;
+}
+.tezina{
+  padding-bottom: 20px;
+}
+.broj-pitanja{
+  font-size: 1.3rem;
+}
+.pitanje{
+  padding: 25px;
+  font-size: 1.5rem;
+}
+.rezultat{
+  padding-bottom: 25px;
+  font-size: 1.5rem;
+}
+.odgovor{
+ margin-left: 50px;
+ margin-right:10px;
+}
+.pitanja{
+  padding-bottom: 20px;
+  font-size: 1.5rem;
+}
+button {
+  margin: 10px;
+  border-color: #0A174E;
+  
+
+}
+.result{
+  color: aliceblue;
+  margin-top: 15px;
+  font-size: 1.5rem;
+}
+.rez{
+  color: aliceblue;
+  font-size: 1.5rem;
+}
+.category-select{
+  font-size: 1.3rem;
+}
+.loading{
+  color: aliceblue;
+  font-size: 1.5rem;
+}
